@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahdiba97.movies.databinding.HomeFragmentBinding
 
@@ -21,7 +22,10 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
-        adapter = HomeRecyclerViewAdapter()
+        adapter = HomeRecyclerViewAdapter {
+            val action = HomeFragmentDirections.actionHomeToDetails(it)
+            findNavController().navigate(action)
+        }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 viewModel.searchMovie(p0 ?: "")
@@ -31,8 +35,6 @@ class HomeFragment : Fragment() {
             override fun onQueryTextChange(p0: String?): Boolean {
                 return true
             }
-
-
         })
 
         viewModel.isSearching.observe(this, {
@@ -50,9 +52,6 @@ class HomeFragment : Fragment() {
             binding.homeRecyclerView.layoutManager = GridLayoutManager(activity, 2)
 
         })
-        binding.tvDetails.setOnClickListener {
-            viewModel.searchMovie("avengers")
-        }
         return binding.root
     }
 

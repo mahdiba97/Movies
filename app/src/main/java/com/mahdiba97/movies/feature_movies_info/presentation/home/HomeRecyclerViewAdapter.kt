@@ -9,7 +9,8 @@ import com.mahdiba97.movies.R
 import com.mahdiba97.movies.databinding.MovieItemBinding
 import com.mahdiba97.movies.feature_movies_info.data.remote.dto.InfoDto
 
-class HomeRecyclerViewAdapter : RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder>() {
+class HomeRecyclerViewAdapter(private val id: (String) -> Unit) :
+    RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder>() {
     private var items = listOf<InfoDto?>()
 
     fun setData(query: List<InfoDto?>) {
@@ -35,13 +36,12 @@ class HomeRecyclerViewAdapter : RecyclerView.Adapter<HomeRecyclerViewAdapter.Vie
             if (item != null) {
                 itemTitle.text = item.title
                 Glide.with(holder.itemView).load(item.image).into(itemPoster)
+                holder.binding.root.setOnClickListener {
+                    id(item.id)
+                }
             }
         }
     }
 
     override fun getItemCount(): Int = items.size
-
-    interface onItemClickListener {
-        fun onClick(id: String)
-    }
 }
