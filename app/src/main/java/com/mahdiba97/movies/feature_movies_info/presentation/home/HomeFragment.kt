@@ -22,8 +22,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
-        adapter = HomeRecyclerViewAdapter {
-            val action = HomeFragmentDirections.actionHomeToDetails(it)
+        adapter = HomeRecyclerViewAdapter { imageUrl, id ->
+            val action = HomeFragmentDirections.actionHomeToDetails(imageUrl, id)
             findNavController().navigate(action)
         }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

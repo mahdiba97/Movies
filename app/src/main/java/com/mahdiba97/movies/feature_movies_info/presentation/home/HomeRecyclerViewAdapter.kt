@@ -9,7 +9,7 @@ import com.mahdiba97.movies.R
 import com.mahdiba97.movies.databinding.MovieItemBinding
 import com.mahdiba97.movies.feature_movies_info.data.remote.dto.InfoDto
 
-class HomeRecyclerViewAdapter(private val id: (String) -> Unit) :
+class HomeRecyclerViewAdapter(private val id: (String, String) -> Unit) :
     RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder>() {
     private var items = listOf<InfoDto?>()
 
@@ -34,10 +34,11 @@ class HomeRecyclerViewAdapter(private val id: (String) -> Unit) :
         val item = items[position]
         with(holder.binding) {
             if (item != null) {
-                itemTitle.text = item.title
+                tvTitle.isSelected = true
+                tvTitle.text = item.title
                 Glide.with(holder.itemView).load(item.image).into(itemPoster)
                 holder.binding.root.setOnClickListener {
-                    id(item.id)
+                    id(item.image ?: "", item.id)
                 }
             }
         }

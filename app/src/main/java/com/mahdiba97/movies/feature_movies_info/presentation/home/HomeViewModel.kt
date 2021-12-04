@@ -18,9 +18,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getMovieInfos: GetMovieInfos
 ) : ViewModel() {
-    private val _searchQuery = MutableLiveData("")
-    val searchQuery: LiveData<String> = _searchQuery
-
     private val _movieInfoState = MutableLiveData<MovieInfoDto>()
     val movieInfoState: LiveData<MovieInfoDto> = _movieInfoState
 
@@ -29,7 +26,6 @@ class HomeViewModel @Inject constructor(
 
     private val _isSearching = MutableLiveData<Boolean>()
     val isSearching: LiveData<Boolean> = _isSearching
-
 
     private var searchJob: Job? = null
 
