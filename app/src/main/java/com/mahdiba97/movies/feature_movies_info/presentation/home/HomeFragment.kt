@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.mahdiba97.movies.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment() {
@@ -36,7 +37,9 @@ class HomeFragment : Fragment() {
                 return true
             }
         })
-
+        viewModel.snackBarMessage.observe(this, {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        })
         viewModel.isSearching.observe(this, {
             if (it) {
                 binding.homePlaceHolderContainer.visibility = View.GONE

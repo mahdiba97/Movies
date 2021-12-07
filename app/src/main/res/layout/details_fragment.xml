@@ -100,7 +100,7 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <ImageView
-            android:background="@drawable/details_back_button_background"
+            android:background="@drawable/details_poster_background"
             android:padding="8dp"
             android:id="@+id/imageView2"
             android:layout_width="match_parent"

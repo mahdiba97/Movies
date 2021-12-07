@@ -27,6 +27,8 @@ class HomeViewModel @Inject constructor(
     private val _isSearching = MutableLiveData<Boolean>()
     val isSearching: LiveData<Boolean> = _isSearching
 
+    private val _snackBarMessage = MutableLiveData<String>()
+    val snackBarMessage: LiveData<String> = _snackBarMessage
     private var searchJob: Job? = null
 
     fun searchMovie(movieName: String) {
@@ -43,10 +45,18 @@ class HomeViewModel @Inject constructor(
                         _isLoading.value = true
                     }
                     is Resource.Success -> {
-                        _movieInfoState.value = result.data!!
                         _isLoading.value = false
+                        try {
+                            _movieInfoState.value = result.data!!
+
+                        } catch (
+                            e: NullPointerException
+                        ) {
+                            _snackBarMessage.value = e.message
+                        }
                     }
                     is Resource.Error -> {
+                        _snackBarMessage.value = result.message?:""
                         _isLoading.value = false
                     }
                 }

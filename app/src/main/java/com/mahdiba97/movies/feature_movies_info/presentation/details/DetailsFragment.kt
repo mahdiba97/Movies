@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.mahdiba97.movies.databinding.DetailsFragmentBinding
 
@@ -27,15 +27,19 @@ class DetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
         viewModel.getMovieInfo(id) {
-            Glide.with(requireContext()).load(it.poster).into(binding.itemPoster)
-            val builder = StringBuilder()
-            binding.tvTitle.text = it.title
-            builder.append("Released Date: ${it.year}\n")
-            builder.append("Duration: ${it.length}\n")
-            builder.append("IMDB Rating: ${it.rating}\n")
-            builder.append("${it.rating_votes} Votes")
-            binding.tvAllDetails.text = builder.toString()
-            binding.tvSummary.text = it.plot
+            try {
+                Glide.with(requireContext()).load(it.poster).into(binding.itemPoster)
+                val builder = StringBuilder()
+                binding.tvTitle.text = it.title
+                builder.append("Released Date: ${it.year}\n")
+                builder.append("Duration: ${it.length}\n")
+                builder.append("IMDB Rating: ${it.rating}\n")
+                builder.append("${it.rating_votes} Votes")
+                binding.tvAllDetails.text = builder.toString()
+                binding.tvSummary.text = it.plot
+            } catch (e: IllegalStateException) {
+            }
+
         }
         return binding.root
     }
